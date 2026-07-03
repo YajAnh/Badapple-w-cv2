@@ -82,17 +82,7 @@ def main():
     except ValueError:
         speed_multiplier = 1.0
 
-    size_input = input("ASCII size (1 = current, 2 = high detail, 3 = ultra detail): ").strip() or "1"
-    try:
-        size_choice = float(size_input)
-        if size_choice >= 3:
-            detail_scale = 4.0
-        elif size_choice == 2:
-            detail_scale = 2.4
-        else:
-            detail_scale = 1.0
-    except ValueError:
-        detail_scale = 1.0
+    detail_scale = 1.0
 
     music_choice = input("Play music? (y/n): ").strip().lower()
     music_enabled = music_choice in {"y", "yes", "1", "true", "on"}
