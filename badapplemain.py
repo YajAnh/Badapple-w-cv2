@@ -9,18 +9,15 @@ VIDEO_PATH = "baddapple.mp4"
 ASCII_CHARS = " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*MW&8%#"
 
 
-def get_terminal_size():
+def getterminalsize():
     size = shutil.get_terminal_size((120, 40))
     return size.columns, size.lines
 
 
-def frame_to_ascii(frame, target_width, max_height, detail_scale=1.0):
+def frame_to_ascii(frame, target_width, max_height):
     height, width, _ = frame.shape
     aspect_ratio = height / width
     target_height = max(1, int(target_width * aspect_ratio * 0.55))
-
-    target_width = max(20, int(target_width * detail_scale))
-    target_height = max(1, int(target_height * detail_scale))
 
     if target_height > max_height:
         scale = max_height / target_height
@@ -48,7 +45,7 @@ def center_ascii(lines, terminal_width, terminal_height):
 
     padded_lines = [" " * left_padding + line for line in lines]
     return [""] * top_padding + padded_lines
-
+#I essentially dont know what why i didnt delete this when i added shutil but imma just not touch it
 
 def start_music(video_path):
     ffplay = shutil.which("ffplay")
@@ -82,8 +79,6 @@ def main():
     except ValueError:
         speed_multiplier = 1.0
 
-    detail_scale = 1.0
-
     music_choice = input("Play music? (y/n): ").strip().lower()
     music_enabled = music_choice in {"y", "yes", "1", "true", "on"}
 
@@ -103,10 +98,10 @@ def main():
         if not ret:
             break
 
-        terminal_width, terminal_height = get_terminal_size()
+        terminal_width, terminal_height = getterminalsize()
         target_width = min(480, max(40, terminal_width - 6))
         max_height = max(8, terminal_height - 2)
-        ascii_lines = frame_to_ascii(frame, target_width, max_height, detail_scale)
+        ascii_lines = frame_to_ascii(frame, target_width, max_height)
         centered_lines = center_ascii(ascii_lines, terminal_width, terminal_height)
         display = centered_lines[:terminal_height]
 
