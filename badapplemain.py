@@ -45,7 +45,7 @@ def center_ascii(lines, terminal_width, terminal_height):
 
     padded_lines = [" " * left_padding + line for line in lines]
     return [""] * top_padding + padded_lines
-#I essentially dont know what why i didnt delete this when i added shutil but imma just not touch it
+
 
 def start_music(video_path):
     ffplay = shutil.which("ffplay")
